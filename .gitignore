@@ -15,3 +15,11 @@ tmp/
 *.mp4
 *.wav
 *.mov
+
+
+# Machine-only output and locally restricted media
+/renders/
+/.cache/
+/assets/local/
+/assets/private/
+/assets/restricted/

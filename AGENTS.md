@@ -32,3 +32,11 @@ Create `episodes/YYYY-MM-DD_slug/`:
 - Prefer branch + draft pull request for changes; do not merge or publish without the user's review.
 - Treat outside-IP crossovers as copyright-sensitive; fan content guidelines from one franchise do not clear another franchise.
 - Follow each voice library's terms and attribution rules. VOICEVOX voice use does not license Touhou or other character art.
+
+
+## Local Windows workstation and PowerShell
+- The user's local workspace is `D:\gensokyo-magicraft`. The working tree, assets, episode packages, and local render outputs belong under that root.
+- VOICEVOX executable: `D:\twitch\voicevox-0.25.2-x64.nsis\VOICEVOX.exe`. It is the desktop editor; verify its local synthesis API at `http://127.0.0.1:50021` instead of assuming it is ready.
+- For local shell commands use PowerShell. Read runtime paths from `config/windows.json` and use `scripts/check_windows_environment.ps1` to test them.
+- Cloud Codex cannot access the local `D:` drive; it must use mocks and must never claim local VOICEVOX or disk verification succeeded.
+- The repository is public. Do not commit restricted assets, generated audio/video, personal information, or secrets.

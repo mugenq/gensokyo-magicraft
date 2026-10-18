@@ -21,3 +21,25 @@ Use one orchestrator with staged tasks, not many agents repeating the same resea
 
 ## Security and rights
 This repository is PUBLIC as initially created. Do not store API keys, private personal information, unreleased paid assets, or images/music without sharing rights. VOICEVOX audio permissions, voice-specific terms, character illustration licensing, Touhou fan guidelines, and other IP licenses require separate review.
+
+
+## Windows local environment (PowerShell)
+
+The local repository workspace is `D:\gensokyo-magicraft`.
+- Assets: `D:\gensokyo-magicraft\assets`
+- Episode library: `D:\gensokyo-magicraft\episodes`
+- Render outputs: `D:\gensokyo-magicraft\renders`
+- Temporary cache: `D:\gensokyo-magicraft\.cache`
+- VOICEVOX editor executable: `D:\twitch\voicevox-0.25.2-x64.nsis\VOICEVOX.exe`
+- Engine endpoint when running: `http://127.0.0.1:50021`
+
+Check the environment from a **local PowerShell session**:
+
+```powershell
+Set-Location 'D:\gensokyo-magicraft'
+.\scripts\check_windows_environment.ps1
+# Explicitly launch VOICEVOX if needed:
+.\scripts\check_windows_environment.ps1 -LaunchVoicevox
+```
+
+The check script does not create missing folders; it only reports whether the paths and engine are reachable. A cloud agent cannot access the local drive or local VOICEVOX server. All renderer code should read `config/windows.json`, not duplicate paths in source.
