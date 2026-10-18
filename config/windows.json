@@ -1,0 +1,14 @@
+{
+  "platform": "windows",
+  "shell": "powershell",
+  "workspace_root": "D:\\gensokyo-magicraft",
+  "directories": {
+    "assets": "D:\\gensokyo-magicraft\\assets",
+    "episodes": "D:\\gensokyo-magicraft\\episodes",
+    "renders": "D:\\gensokyo-magicraft\\renders",
+    "cache": "D:\\gensokyo-magicraft\\.cache"
+  },
+  "voicevox_executable": "D:\\twitch\\voicevox-0.25.2-x64.nsis\\VOICEVOX.exe",
+  "voicevox_api_base": "http://127.0.0.1:50021",
+  "notes": "Local-Windows-only settings. Cloud agent cannot access D: drive. Never assume paths are present outside this PC. Do not start VOICEVOX except on explicit request."
+}
