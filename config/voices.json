@@ -1,0 +1,64 @@
+{
+  "note": "Tentative VOICEVOX names/styles. Discover numeric IDs through /speakers at runtime. Tune presets by listening; verify voice licenses and attribution.",
+  "energetic": {
+    "voice_name": "春日部つむぎ",
+    "voice_style": "ノーマル",
+    "emotions": {
+      "normal": {
+        "speedScale": 1.06,
+        "pitchScale": 0.02,
+        "intonationScale": 1.2,
+        "volumeScale": 1
+      },
+      "excited": {
+        "speedScale": 1.15,
+        "pitchScale": 0.04,
+        "intonationScale": 1.38,
+        "volumeScale": 1
+      },
+      "serious": {
+        "speedScale": 0.98,
+        "pitchScale": -0.02,
+        "intonationScale": 0.95,
+        "volumeScale": 0.98
+      }
+    }
+  },
+  "reserved": {
+    "voice_name": "小夜/SAYO",
+    "voice_style": "ノーマル",
+    "emotions": {
+      "normal": {
+        "speedScale": 0.93,
+        "pitchScale": 0,
+        "intonationScale": 0.92,
+        "volumeScale": 0.88
+      },
+      "shy": {
+        "speedScale": 0.88,
+        "pitchScale": -0.02,
+        "intonationScale": 0.8,
+        "volumeScale": 0.78
+      },
+      "surprised": {
+        "speedScale": 1.03,
+        "pitchScale": 0.03,
+        "intonationScale": 1.22,
+        "volumeScale": 0.93
+      }
+    }
+  },
+  "attribution_review": [
+    "VOICEVOX:春日部つむぎ",
+    "VOICEVOX:小夜/SAYO"
+  ],
+  "audio": {
+    "format": "wav",
+    "silence_between_turns_s": 0.2
+  },
+  "subtitles": {
+    "ja": "japanese.srt",
+    "en": "english.srt",
+    "burn_in_english": false
+  }
+}
