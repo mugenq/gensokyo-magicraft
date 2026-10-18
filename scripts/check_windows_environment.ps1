@@ -1,3 +1,6 @@
+#requires -Version 5.1
+# Keep this script ASCII-only (UTF-8 without BOM is safe for ASCII).
+# Non-ASCII speaker names belong in config/voices.json, read explicitly as UTF-8.
 # Check local Windows settings for Gensokyo Magicraft.
 # From the repo root: .\scripts\check_windows_environment.ps1
 # To launch VOICEVOX if it is not running: .\scripts\check_windows_environment.ps1 -LaunchVoicevox
@@ -8,6 +11,9 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
 $configPath = Join-Path $repoRoot 'config\windows.json'
 $config = Get-Content -LiteralPath $configPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$voicesPath = Join-Path $repoRoot 'config\voices.json'
+$voices = Get-Content -LiteralPath $voicesPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$requiredSpeakerNames = @($voices.energetic.voice_name, $voices.reserved.voice_name)
 
 Write-Host "Repository: $repoRoot"
 Write-Host "Configured workspace: $($config.workspace_root)"
@@ -53,9 +59,12 @@ for ($i=0; $i -lt $attempts; $i++) {
     try {
         $version = Invoke-RestMethod -Uri "$api/version" -TimeoutSec 3
         Write-Host "VOICEVOX API available at $api (version $version)"
-        $speakers = Invoke-RestMethod -Uri "$api/speakers" -TimeoutSec 5
+        # The engine returns UTF-8 JSON without a charset. PowerShell 5.1 can
+        # decode it as ANSI, so decode the response bytes explicitly instead.
+        $speakerResponse = Invoke-WebRequest -Uri "$api/speakers" -UseBasicParsing -TimeoutSec 5
+        $speakers = [System.Text.Encoding]::UTF8.GetString($speakerResponse.RawContentStream.ToArray()) | ConvertFrom-Json
         $names = @($speakers | ForEach-Object { $_.name })
-        foreach ($requiredName in @('春日部つむぎ','小夜/SAYO')) {
+        foreach ($requiredName in $requiredSpeakerNames) {
             if ($names -contains $requiredName) { Write-Host "Speaker found: $requiredName" }
             else { Write-Warning "Speaker not found: $requiredName" }
         }

@@ -43,3 +43,22 @@ Set-Location 'D:\gensokyo-magicraft'
 ```
 
 The check script does not create missing folders; it only reports whether the paths and engine are reachable. A cloud agent cannot access the local drive or local VOICEVOX server. All renderer code should read `config/windows.json`, not duplicate paths in source.
+
+### PowerShell compatibility and encoding
+
+`scripts/check_windows_environment.ps1` supports Windows PowerShell 5.1 and PowerShell 7. Keep its source ASCII-only, saved as UTF-8 without BOM (ASCII has identical bytes in both encodings). Speaker names come from `config/voices.json`, which must be saved as UTF-8; the script reads JSON with explicit `-Encoding UTF8`, so that file does not require a BOM.
+
+The VOICEVOX `/speakers` response is also decoded explicitly from UTF-8 bytes. This avoids Windows PowerShell 5.1's incorrect decoding of Japanese JSON when the server does not specify a charset.
+
+Windows PowerShell 5.1 otherwise reads BOM-less script files using the system ANSI code page. If non-ASCII text is ever added to a `.ps1` file, save that file as **UTF-8 with BOM** for Windows PowerShell 5.1. For these environment-check scripts, prefer keeping the source ASCII-only and Unicode data in explicitly decoded JSON instead; the regression check enforces this convention.
+
+Run the regression check under each installed shell from the repository root:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\test_check_windows_environment.ps1
+pwsh.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\test_check_windows_environment.ps1
+```
+
+`-ExecutionPolicy Bypass` applies only to the test process; it does not change the machine's execution policy. Omit it if your policy already permits local scripts.
+
+The check uses the running shell's parser and mocked VOICEVOX responses to verify Japanese speaker matching (including incorrectly decoded response text), missing-speaker warnings, and the unavailable-engine warning. It makes no network requests, launches no applications, and requires no paid APIs.
