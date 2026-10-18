@@ -1,0 +1,17 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.venv/
+__pycache__/
+*.py[cod]
+node_modules/
+dist/
+.cache/
+tmp/
+# Render outputs should be stored outside git or uploaded as controlled artifacts.
+*.mp4
+*.wav
+*.mov
